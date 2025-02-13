@@ -4,7 +4,6 @@ import entities.Todo;
 import interfaces.factories.TodoFactory;
 
 import java.sql.ResultSet;
-import java.util.Optional;
 
 public class ResultSetTodoFactory implements TodoFactory {
     private ResultSet resultSet;

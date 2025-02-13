@@ -1,7 +1,5 @@
 package entities;
 
-import java.util.Optional;
-
 public class Todo {
     private String title;
     private Boolean isDone;
