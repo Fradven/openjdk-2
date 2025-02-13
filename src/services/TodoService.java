@@ -27,11 +27,18 @@ public class TodoService {
             System.out.println("6 - Quitter");
 
             System.out.print("Votre choix : ");
-            String choix = scanner.nextLine();
+            String choice = scanner.nextLine();
 
-            switch (choix) {
-                case "1": showTodos(false); break;
-                case "2": showTodos(true); break;
+            switch (choice) {
+                case "1":
+                    showTodos(false);
+                    break;
+                case "2":
+                    showTodos(true);
+                    break;
+                case "3":
+                    addTodo();
+                    break;
                 default: System.out.println("Votre action n’est pas autorisée !");
             }
         }
@@ -53,6 +60,26 @@ public class TodoService {
             }
         } catch (Exception e) {
             System.out.println("Erreur lors de la récupération des tâches : " + e.getMessage());
+        }
+    }
+
+    private void addTodo() {
+        try {
+            System.out.print("Titre de la tâche : ");
+            String title = scanner.nextLine();
+
+            System.out.print("La tâche est-elle terminée ? (true/false) : ");
+            boolean isDone = Boolean.parseBoolean(scanner.nextLine());
+
+            System.out.print("🔹 Confirmer l'ajout de la tâche \"" + title + "\" (" + isDone + ") ? (oui/non) : ");
+            if (scanner.nextLine().equalsIgnoreCase("oui")) {
+                Todo todo = new Todo(title, isDone, null);
+                if (todoRepository.save(todo)) {
+                    System.out.println("La tâche a bien été créée !");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Erreur : " + e.getMessage());
         }
     }
 }
