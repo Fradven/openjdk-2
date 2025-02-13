@@ -1,8 +1,10 @@
 package services;
 
+import entities.Todo;
 import repositories.TodoRepository;
 
 import java.sql.Connection;
+import java.util.List;
 import java.util.Scanner;
 
 public class TodoService {
@@ -28,8 +30,29 @@ public class TodoService {
             String choix = scanner.nextLine();
 
             switch (choix) {
+                case "1": showTodos(false); break;
+                case "2": showTodos(true); break;
                 default: System.out.println("Votre action n’est pas autorisée !");
             }
+        }
+    }
+
+    private void showTodos(boolean isDone) {
+        try {
+            List<Todo> todos = todoRepository.findAll();
+            System.out.println("\n📜 Liste des tâches " + (isDone ? "faites" : "à faire") + " :");
+            for (Todo todo : todos) {
+                if (isDone) {
+                    if (todo.getDone()) {
+                        System.out.println(todo.getId() + ": " + todo.getTitle());
+                    }
+                }
+                else {
+                    System.out.println(todo.getId() + ": " + todo.getTitle());
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Erreur lors de la récupération des tâches : " + e.getMessage());
         }
     }
 }
